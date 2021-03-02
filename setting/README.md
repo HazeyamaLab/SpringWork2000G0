@@ -5,7 +5,7 @@
 Hazeyamalab の GitHub から新しくレポジトリを作成する．
 その時に下記の画像のように，Repository template で`Hazeyamalab/SpringWork2000G0`を選択し作成する．
 
-<img width="1231" alt="スクリーンショット 2020-10-22 14 53 47" src="https://user-images.githubusercontent.com/38200453/96830640-bc226800-1476-11eb-8aa5-7a034b99bc50.png">
+<img width="1149" alt="スクリーンショット 2021-03-02 11 15 44" src="https://user-images.githubusercontent.com/38200453/109586532-b89b9d80-7b48-11eb-812e-25d5b6ec605e.png">
 
 ## プロジェクトのパスを変更
 
