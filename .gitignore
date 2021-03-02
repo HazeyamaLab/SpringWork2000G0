@@ -242,6 +242,6 @@ gradle-app.setting
 
 **/build/
 # wrapper #
-# wrapper/
+wrapper/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,groovy,vscode,intellij,eclipse

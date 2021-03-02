@@ -10,5 +10,6 @@ RUN ./gradlew war
 FROM tomcat:jdk11-adoptopenjdk-hotspot
 
 EXPOSE 8080
+ENV JAVA_ENV production
 
 COPY --from=builder ./app/build/libs/springwork2000g0.war /usr/local/tomcat/webapps
