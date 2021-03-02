@@ -7,17 +7,6 @@
 <pre>
 .
 ├── README.md
-├── bin
-│   └── main
-│       └── servlet
-├── build
-│   ├── classes
-│   │   └── java
-│   ├── generated
-│   │   └── sources
-│   └── tmp
-│       ├── compileJava
-│       └── tomcatRun
 ├── build.gradle
 ├── docker
 │   ├── README.md
