@@ -14,7 +14,7 @@ $ gradle composeUp -Penvironment="local"
 
 以上で http://localhost:8080/springwork2000g0 にアクセスできれば完了．
 
-## 本番環境へのデプロイ方法
+## 本番環境へのデプロイ方法（1 回目）
 
 ### 1. docker image のビルド
 
@@ -55,9 +55,9 @@ $ docker login diamond.u-gakugei.ac.jp
 
 認証ができたら以下のコマンドで push する．
 
-```
-docker push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
-docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
+```console:console
+$ docker push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
+$ docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 ```
 
 ### 3. diamond に アクセス
@@ -66,16 +66,16 @@ docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 
 2.で push したイメージを pull する．
 
-```
-docker pull diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
-docker pull diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
+```console:console
+$ docker pull diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
+$ docker pull diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 ```
 
 pull したイメージを元にコンテナを生成する ✨
 
-```
-docker container run -d --net=springwork2000g0 --name=springwork2000g0_app diamond.u-gakugei.ac.jp/springwork2000g0_app
-docker container run -d --net=springwork2000g0 --name=springwork2000g0_db diamond.u-gakugei.ac.jp/springwork2000g0_db
+```console:console
+$ docker container run -d --net=springwork2000g0 --name=springwork2000g0_app diamond.u-gakugei.ac.jp/springwork2000g0_app
+$ docker container run -d --net=springwork2000g0 --name=springwork2000g0_db diamond.u-gakugei.ac.jp/springwork2000g0_db
 ```
 
 ### 4. nginx のリバースプロキシの設定
@@ -86,8 +86,8 @@ nginx のリバースプロキシを設定しアプリケーションにアク�
 
 `docker container inspect`コマンドを使う．
 
-```
-docker container inspect springwork2000g0_app | grep IPAddress
+```console:console
+$ docker container inspect springwork2000g0_app | grep IPAddress
             "SecondaryIPAddresses": null,
             "IPAddress": "",
                     "IPAddress": "172.18.0.2",
@@ -95,8 +95,8 @@ docker container inspect springwork2000g0_app | grep IPAddress
 
 この設定を nginx に加える．
 
-```
-sudo vi /etc/nginx/nginx.conf
+```console:console
+$ sudo vi /etc/nginx/nginx.conf
 ```
 
 tomcat は 8080 ポートで動いてるので注意
@@ -109,8 +109,46 @@ location /springwork2000g0 {
 
 設定したあとは nginx を再起動する．
 
-```
-sudo systemctl restart nginx
+```console:console
+$ sudo systemctl restart nginx
 ```
 
 以上で https://diamond.u-gakugei.ac.jp/springwork2000g0 にアクセスできれば完了です．
+
+## 本番環境へのデプロイ
+
+開発時に本番環境にデプロイしたい時はこちらから
+
+### 1. docker login & image のビルド & push
+
+```console:console
+$ sh production-deploy.sh
+```
+
+`production-deploy.sh`の中身は以下になっており，`login`, `build`, `push` を行っている．
+
+```sh:production-deploy.sh
+# 手動でdiamondのdocker registryにpush
+# docker login
+docker login diamond.u-gakugei.ac.jp
+
+# build
+docker build -t diamond.u-gakugei.ac.jp/springwork2000g0_app:latest -f docker/production/java/Dockerfile .
+docker build -t diamond.u-gakugei.ac.jp/springwork2000g0_db:latest -f docker/production/mysql/Dockerfile .
+
+# push
+docker push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
+docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
+```
+
+### 2. docker pull & container run
+
+diamond のコンテナは portainer で管理しているため．アクセスし diamond のコンテナ一覧からデプロイしたいコンテナを選択（springwork2000g0_app）．
+
+<img width="1483" alt="スクリーンショット 2021-03-03 8 27 59" src="https://user-images.githubusercontent.com/38200453/109728892-67e47d00-7bfa-11eb-9898-479b0d37a7ce.png">
+
+コンテナを recreate する．以下のように 最新の image を pull しながら作成し直す．
+
+<img width="750" alt="スクリーンショット 2021-03-03 8 29 33" src="https://user-images.githubusercontent.com/38200453/109729022-9e21fc80-7bfa-11eb-885c-b91655e50741.png">
+
+以上で https://diamond.u-gakugei.ac.jp/springwork2000g0 にアクセスし反映がされていれば完了です．
