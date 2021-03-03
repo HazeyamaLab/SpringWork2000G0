@@ -14,7 +14,10 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Login to docker registry
-      run: docker login -u ${{ secrets.DIAMOND_REGISTRY_USER }} -p ${{ secrets.DIAMOND_REGISTRY_PASSWORD }} diamond.u-gakugei.ac.jp
+      run: docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD diamond.u-gakugei.ac.jp
+      env:
+        REGISTRY_USER: ${{ secrets.DIAMOND_REGISTRY_USER }}
+        REGISTRY_PASSWORD: ${{ secrets.DIAMOND_REGISTRY_PASSWORD }}
 
     - name: Docker build cathe
       env:
