@@ -121,6 +121,13 @@ $ sudo systemctl restart nginx
 
 ### 1. docker login & image のビルド & push
 
+1. GitHub の master ブランチに反映  
+   GitHub の master ブランチに反映させると自動的で GitHubActions によって docker login & image のビルド & push を行う．
+
+2. 手動で行う．
+
+以下のコマンドを実行する．
+
 ```console:console
 $ sh production-deploy.sh
 ```
