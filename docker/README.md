@@ -56,8 +56,8 @@ $ docker login diamond.u-gakugei.ac.jp
 認証ができたら以下のコマンドで push する．
 
 ```console:console
-$ docker push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
-$ docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
+$ docker image push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
+$ docker image push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 ```
 
 ### 3. diamond に アクセス
@@ -67,8 +67,8 @@ $ docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 2.で push したイメージを pull する．
 
 ```console:console
-$ docker pull diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
-$ docker pull diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
+$ docker image pull diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
+$ docker image pull diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 ```
 
 pull したイメージを元にコンテナを生成する ✨
@@ -140,12 +140,12 @@ $ sh production-deploy.sh
 docker login diamond.u-gakugei.ac.jp
 
 # build
-docker build -t diamond.u-gakugei.ac.jp/springwork2000g0_app:latest -f docker/production/java/Dockerfile .
-docker build -t diamond.u-gakugei.ac.jp/springwork2000g0_db:latest -f docker/production/mysql/Dockerfile .
+docker image build -t diamond.u-gakugei.ac.jp/springwork2000g0_app:latest -f docker/production/java/Dockerfile .
+docker image build -t diamond.u-gakugei.ac.jp/springwork2000g0_db:latest -f docker/production/mysql/Dockerfile .
 
 # push
-docker push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
-docker push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
+docker image push diamond.u-gakugei.ac.jp/springwork2000g0_app:latest
+docker image push diamond.u-gakugei.ac.jp/springwork2000g0_db:latest
 ```
 
 ### 2. docker pull & container run
