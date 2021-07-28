@@ -3,9 +3,10 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
+        gradlePluginPortal()
     }
     dependencies {
-        classpath group: 'com.bmuschko', name: 'gradle-tomcat-plugin', version: '2.5'
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.7.0'
         classpath "mysql:mysql-connector-java:8.0.15" // mysql8系
     }
 }
@@ -42,26 +43,25 @@ dependencies {
     //tomcat & サーブレットの設定
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.1'
-    compile group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
-    tomcat "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6"
-    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-        exclude group: "org.eclipse.jdt.core.compiler", module: "ecj"
-    }
+
+    // tomcat
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+        "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+        "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     // MySQL
     implementation "mysql:mysql-connector-java:$mySQLVersion"
     implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.5')
     implementation('com.fasterxml.jackson.core:jackson-core:2.8.5')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.8.5')
-    
 }
 
 tomcat() {
+    stopPort = 8888
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
     ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
     // プロジェクト名(コンテキストパス)
-    // http://localhost:8080/se00g0 の場合
+    // http://localhost:8080/springwork2000g0 の場合
     if( project.hasProperty('environment') ){
         contextPath = "${project.environment}"
     } else {
