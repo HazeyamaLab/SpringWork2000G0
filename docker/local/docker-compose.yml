@@ -24,6 +24,7 @@ services:
 
   mysql:
     container_name: local_springwork2000g0_db
+    platform: linux/x86_64
     build:
       context: ../../
       dockerfile: ./docker/local/mysql/Dockerfile

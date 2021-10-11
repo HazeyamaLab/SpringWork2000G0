@@ -1,5 +1,5 @@
 # ビルドコンテナ
-FROM adoptopenjdk/openjdk11:alpine as builder
+FROM openjdk:11.0.12-slim as builder
 WORKDIR /app
 
 # プロジェクトの配置とビルド
@@ -8,8 +8,7 @@ RUN ./gradlew war
 
 # プロダクション用のコンテナ
 FROM tomcat:jdk11-adoptopenjdk-hotspot
-
-EXPOSE 8080
 ENV JAVA_ENV production
+EXPOSE 8080
 
-COPY --from=builder ./app/build/libs/springwork2000g0.war /usr/local/tomcat/webapps
+COPY --from=builder ./app/build/libs/se00g0.war /usr/local/tomcat/webapps
