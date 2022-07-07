@@ -1,4 +1,4 @@
-# SoringWork2000G0
+# SpringWork2000G0
 
 春課題のテンプレートリポジトリ
 
