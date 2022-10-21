@@ -8,6 +8,7 @@ services:
     image: diamond.u-gakugei.ac.jp/springwork2000g0_app
 
   mysql:
+    # platform: linux/amd64 # MacM1チップ使用者は有効化する
     container_name: springwork2000g0_db
     build:
       context: ../../
