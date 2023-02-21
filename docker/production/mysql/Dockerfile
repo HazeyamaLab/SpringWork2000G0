@@ -1,4 +1,4 @@
-FROM mysql:8
+FROM mysql:8-debian
 
 ENV TZ "Asia/Tokyo"
 
